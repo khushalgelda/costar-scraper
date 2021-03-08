@@ -10,7 +10,7 @@ pd.set_option('display.max_columns', None)
 city_to_scrape = 'chicago'
 min_sf = 500
 max_sf = 1000
-start_page = 1  # Start scraping from this page number
+start_page = 109  # Start scraping from this page number
 save_page_interval = 12  # Create csv after scraping these many number of pages
 
 
@@ -136,9 +136,10 @@ for page_count in range((num_of_pages - (start_page - 1)) + 1):
                 id_value = 'row' + str(i) + 'leaseCompsGrid'
                 # for j in range(len(column_names)):
                 entry = {}
+                cell_contents = rows[i].find_elements_by_xpath(".//div[contains(@class,'cellContent')]")
                 for j in range(len(column_names)):
                     entry[column_names[j]] = \
-                        rows[i].find_elements_by_xpath(".//div[contains(@class,'cellContent')]")[j].text
+                        cell_contents[j].text
                 df = df.append(entry, ignore_index=True)
             if k == 4:
                 break
